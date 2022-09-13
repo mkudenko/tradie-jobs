@@ -1,6 +1,13 @@
-# Getting Started with Create React App
+# Tradie Jobs app
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Requirements & installation
+
+Node v16.
+
+### `nvm use`
+### `npm install`
 
 ## Available Scripts
 
@@ -19,28 +26,38 @@ You will also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Development notes
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Assumptions
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* No authentication required
+* All jobs are hardcoded
+* Job status can be changed from any to any
+* All dates are local
+* UUID is used for jobs and notes IDs
+* Job notes are sorted by creation date, latest first
+* Updating the note updates the creation date.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### State management
 
-### `npm run eject`
+The application uses [Recoil](https://recoiljs.org/).
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Tests
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+After completing the functionality, I added a few components tests. See `/src/components/__tests__`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The app will need more tests:
+* Showing/hiding the job details
+* Showing/hiding the note edit form
+* Updating the job status
+* Saving notes
+* Filtering
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Other
 
-## Learn More
+All state change operations are handled in `useJobsRepository.tsx`.\
+Such decoupling allows to easily add any other storage mechanism, for example a backend API.\
+The components' logic won't need to change, aside from adding `async/await` where needed.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Jobs sorting not implemented, but would follow the same logic as with filtering - via Recoil state.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
